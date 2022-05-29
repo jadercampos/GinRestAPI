@@ -1,18 +1,14 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
+	"github.com/jadercampos/GinRestAPI/models"
+	"github.com/jadercampos/GinRestAPI/routes"
 )
 
-func ExibeTodosAlunos(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"id":   "1",
-		"nome": "Jader Campos",
-	})
-}
-
 func main() {
-	r := gin.Default()
-	r.GET("/alunos", ExibeTodosAlunos)
-	r.Run(":5000")
+	models.Alunos = []models.Aluno{
+		{Nome: "Pedro", CPF: "0000000000", RG: "99999999"},
+		{Nome: "João", CPF: "1111111111", RG: "88888888"},
+	}
+	routes.HandleRequests()
 }
