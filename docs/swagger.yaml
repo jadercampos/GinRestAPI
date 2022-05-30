@@ -1,0 +1,218 @@
+definitions:
+  gorm.DeletedAt:
+    $ref: '#/definitions/sql.NullTime'
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  models.Aluno:
+    properties:
+      cpf:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+        type: object
+      id:
+        type: integer
+      nome:
+        type: string
+      rg:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  sql.NullTime:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+info:
+  contact: {}
+  license: {}
+paths:
+  /{nome}:
+    get:
+      consumes:
+      - application/json
+      description: Só está te cumprimentando UAI!
+      parameters:
+      - description: Nome do caboclo
+        in: path
+        name: nome
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exibe uma saudção
+      tags:
+      - oi_sumido
+  /alunos:
+    get:
+      consumes:
+      - application/json
+      description: Exibe todos os alunos cadastrados
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Aluno'
+            type: array
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exibe todos os alunos
+      tags:
+      - alunos
+    put:
+      consumes:
+      - application/json
+      description: Adiciona um novo aluno
+      parameters:
+      - description: Novo Aluno
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.Aluno'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Adiciona aluno
+      tags:
+      - aluno
+  /alunos/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deleta aluno pelo ID
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Deleta aluno
+      tags:
+      - aluno
+    get:
+      consumes:
+      - application/json
+      description: Busca o aluno pelo ID
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exibe um aluno
+      tags:
+      - aluno
+    patch:
+      consumes:
+      - application/json
+      description: Atualiza os dados de um aluno existente
+      parameters:
+      - description: ID do Aluno
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Novo Aluno
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/models.Aluno'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Atualiza aluno
+      tags:
+      - aluno
+  /alunos/cpf/{cpf}:
+    get:
+      consumes:
+      - application/json
+      description: Busca o aluno pelo CPF
+      parameters:
+      - description: CPF do Aluno
+        in: path
+        name: cpf
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Aluno'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Exibe um aluno
+      tags:
+      - aluno
+swagger: "2.0"
