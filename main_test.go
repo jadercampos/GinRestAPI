@@ -23,5 +23,4 @@ func TestVerificaStatusCodeDaSaudacaoComParametro(t *testing.T) {
 	if resposta.Code != http.StatusOK {
 		t.Fatalf("Status error: valor recebido foi %d e o esperado era %d", resposta.Code, http.StatusOK)
 	}
-
 }
