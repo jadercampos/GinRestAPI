@@ -4,13 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jadercampos/GinRestAPI/controllers"
 	docs "github.com/jadercampos/GinRestAPI/docs"
+	cors "github.com/rs/cors/wrapper/gin"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func HandleRequests() {
-	r := gin.Default()
 	docs.SwaggerInfo.BasePath = "/"
+	r := gin.Default()
+	r.Use(cors.Default())
 	r.LoadHTMLGlob("templates/*")
 	r.Static("/assets", "./assets")
 	r.GET("/:nome", controllers.Saudacao)
