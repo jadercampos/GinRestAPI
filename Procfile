@@ -1,1 +1,1 @@
-web: bin/jdc-gin-rest-api
+web: bin/github.com/jadercampos/GinRestAPI
