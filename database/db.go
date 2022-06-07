@@ -1,9 +1,12 @@
 package database
 
 import (
+	"fmt"
 	"log"
 
+	"github.com/jadercampos/GinRestAPI/configuration"
 	"github.com/jadercampos/GinRestAPI/models"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -14,11 +17,15 @@ var (
 )
 
 func ConectaComBancoDeDados() {
-	//stringDeConexao := "host=localhost user=root password=root dbname=root port=5432 sslmode=disable"
-	stringDeConexao := "host=ec2-3-211-221-185.compute-1.amazonaws.com user=dxgetmqtrczbmj password=807d01583250185ecba479ccd30de6f70466c6b2033bee18d4a90565a607b8d8 dbname=da0gk0gmlam0dq port=5432 sslmode=require"
-	DB, err = gorm.Open(postgres.Open(stringDeConexao))
+	DB, err = gorm.Open(postgres.Open(getConString()))
 	if err != nil {
 		log.Panic("Erro ao conectar com banco de dados")
 	}
 	DB.AutoMigrate(&models.Aluno{})
+}
+
+func getConString() string {
+	config := configuration.LoadConfig().Database
+	conString := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=%s", config.Host, config.Username, config.Password, config.Name, config.Port, config.SSLMode)
+	return conString
 }
